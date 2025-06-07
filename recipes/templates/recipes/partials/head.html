@@ -83,6 +83,7 @@
             font-size: 1.6rem;
             font-family: var(--font-primary);
             background: var(--color-gray-1);
+            color: var(--color-dark-text);
         }
 
         h1,
@@ -124,7 +125,7 @@
             border: .2rem solid var(--color-primary-dark);
             max-width: 64rem;
             margin: 0 auto;
-            border-radius: 0.3rem;
+            border-radius: 0.8rem;
             position: relative;
             transition: all 300ms ease-in-out;
         }
@@ -147,11 +148,13 @@
             position: absolute;
             top: 0;
             right: 0;
+            transition: 100ms;
         }
 
         .search-button:focus {
             outline: 1px solid var(--color-primary);
             background: rgba(0, 0, 0, .05);
+            border-radius: 0.8rem
         }
 
         .search-form:focus-within {
@@ -171,6 +174,55 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: var(--spacing-gutter-large)
+        }
+
+        .recipe {
+            background: var(--color-white);
+            box-shadow: -5px 5px 10px rgba(0, 0, 0, .3);
+            transform: scale(1);
+            transition: all 300ms ease-in-out;
+        }
+
+        .recipe img {
+            max-width: 100%;
+        }
+
+        .recipe-list-item {
+            max-width: 64rem;
+        }
+
+        .recipe-list-item:hover {
+            transform: scale(1.01);
+            box-shadow: -10px 5px 10px rgba(0, 0, 0, .4);
+        }
+
+        .recipe-title-container {
+            padding: var(--spacing-gutter-small);
+            padding-bottom: calc(var(--spacing-gutter-small) / 2)
+        }
+
+        .recipe-author {
+            padding: 0 var(--spacing-gutter-small);
+        }
+
+        .recipe-content {
+            padding: var(--spacing-gutter-small);
+            padding-top: calc(var(--spacing-gutter-small) / 2)
+        }
+
+        .recipe-author-item {
+            color: var(--color-gray-4);
+            margin-right: calc(var(--spacing-gutter-small) / 2)
+        }
+
+        .recipe-author a {
+            color: var(--color-primary);
+            transition: all 300ms ease-in-out;
+            text-decoration: none;
+        }
+
+        .recipe-author a:hover {
+            color: var(--color-primary-dark);
         }
     </style>
 
