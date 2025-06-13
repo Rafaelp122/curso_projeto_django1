@@ -1,7 +1,6 @@
 <div class="recipe recipe-list-item">
     <div class="recipe-cover">
-        <img src="https://s2-g1.glbimg.com/c1tS_axTjV_qDkmMeMs3wYZCgGY=/0x0:5472x3648/1008x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2017/H/v/pTatikTlSIWRuTzd0JwA/j9a6180.jpg"
-            alt="temporário">
+        <img src="{{ recipe.cover.url }}" alt="temporário">
     </div>
     <div class="recipe-title-container">
         <h2 class="recipe-title">{{ recipe.title }}</h2>
@@ -43,10 +42,18 @@
         </div>
     </div>
 
-    <footer class="recipe-footer">
-        <a href="/recipes/3/" class="recipe-read-more button button-dark button-full-width">
-            <i class="fa-solid fa-eye"></i>
-            <span>Ver mais...</span>
-        </a>
-    </footer>                
+    {% if is_detail_page is not True %}
+        <footer class="recipe-footer">
+            <a href="/recipes/3/" class="recipe-read-more button button-dark button-full-width">
+                <i class="fa-solid fa-eye"></i>
+                <span>Ver mais...</span>
+            </a>
+        </footer>     
+    {% endif %}
+    
+    {% if is_detail_page is True %}
+        <div class="preparation-steps">
+            {{ recipe.preparation_steps|linebreaksbr }}
+        </div>
+    {% endif%}
 </div>
