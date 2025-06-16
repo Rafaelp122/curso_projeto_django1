@@ -293,3 +293,9 @@ h6 {
   margin: 2rem;
   padding: 0 2rem;
 }
+
+/* generics */
+
+.center {
+    text-align: center;
+}
