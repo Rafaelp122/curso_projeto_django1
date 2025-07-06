@@ -6,13 +6,11 @@ from recipes.models import Recipe
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by("-id")
 
-    return render(
-        request,
-        "recipes/pages/home.html",
-        context={
-            "recipes": recipes,
-        },
-    )
+    context = {
+        "recipes": recipes,
+        }
+
+    return render(request, "recipes/pages/home.html", context)
 
 
 def category(request, category_id):
@@ -23,7 +21,10 @@ def category(request, category_id):
         ).order_by("-id")
     )
 
-    context = {"recipes": recipes, "title": f"{recipes[0].category.name} - Category | "}
+    context = {
+        "recipes": recipes,
+        "title": f"{recipes[0].category.name} - Category | "
+    }
 
     return render(request, "recipes/pages/category.html", context)
 
