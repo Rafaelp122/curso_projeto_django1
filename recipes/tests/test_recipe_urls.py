@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 # checa se os nomes das URLs geram os caminhos corretos.
-class RecipeURLsTest(TestCase):  
+class RecipeURLsTest(TestCase):
     def test_recipe_home_url_is_correct(self):
         url = reverse("recipes:home")
         self.assertEqual(url, "/")
