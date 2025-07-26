@@ -1,0 +1,9 @@
+{
+  "python.analysis.typeCheckingMode": "basic",
+  "mypy.dmypyExecutable": "/home/rafael/Projetos/projetos_django/curso_projeto_django1/venv/bin/dmypy",
+  "python.testing.pytestArgs": [
+    "."
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}
