@@ -46,15 +46,18 @@ class RecipeViewsTest(TestCase):
             preparation_time='10',
             preparation_time_unit='Minutos',
             servings=5,
-            servings_unit='People',
+            servings_unit='Porções',
             preparation_steps='Recipe Preparation Steps',
             preparation_steps_is_html=False,
             is_published=True,
         )
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
+        response_context_recipes = response.context['recipes']
         self.assertIn('Recipe Title', content)
-        pass
+        self.assertIn('10 Minutos', content)
+        self.assertIn('5 Porções', content)
+        self.assertEqual(len(response_context_recipes), 1)
 
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(
