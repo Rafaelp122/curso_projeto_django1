@@ -1,3 +1,5 @@
+"""Tests for the recipe views in the recipes app."""
+
 from django.urls import resolve, reverse
 from recipes import views
 
