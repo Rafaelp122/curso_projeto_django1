@@ -1,8 +1,8 @@
 """Testes do modelos de receita"""
 
-from .test_recipe_base import Recipe, RecipeTestBase
 from django.core.exceptions import ValidationError
-from parameterized import parameterized
+from parameterized import parameterized  # type: ignore
+from .test_recipe_base import Recipe, RecipeTestBase
 
 
 class RecipeModelTest(RecipeTestBase):
@@ -50,4 +50,15 @@ class RecipeModelTest(RecipeTestBase):
         self.assertFalse(
             recipe.is_published,
             msg='Recipe is_published is not False'
+        )
+
+    def test_recipe_string_representation(self):
+        needed = 'Testing Representation'
+        self.recipe.title = needed
+        self.recipe.full_clean()
+        self.recipe.save()
+        self.assertEqual(
+            str(self.recipe), needed,
+            msg='Recipe string representation must be '
+                f'"{needed}" but "{str(self.recipe)}" was received'
         )
