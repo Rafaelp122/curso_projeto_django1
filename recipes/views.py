@@ -60,8 +60,10 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
-    return render(request, 'recipes/pages/search.html', {
+    context = {
         'page_title': f'Search for "{search_term}" |',
         'search_term': search_term,
         'recipes': recipes,
-    })
+    }
+
+    return render(request, 'recipes/pages/search.html', context)
