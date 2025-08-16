@@ -316,6 +316,12 @@ h6 {
 }
 
 /* Messages */
+.messages-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: calc(var(--spacing-gutter-medium))
+}
+
 .message {
   padding: 1rem;
   border-radius: 4px;
@@ -365,4 +371,10 @@ h6 {
 
 .center {
   text-align: center;
+}
+
+@media (max-width: 600px) {
+  .main-content-list{
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
 }
