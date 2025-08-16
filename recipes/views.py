@@ -7,7 +7,7 @@ from recipes.models import Recipe
 
 import os
 
-PER_PAGE = os.environ.get('PER_PAGE', 6)
+PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
 
 def home(request):
@@ -15,7 +15,7 @@ def home(request):
         is_published=True
     ).order_by("-id")
 
-    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGES)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
     context = {
         "recipes": page_obj,
@@ -33,7 +33,7 @@ def category(request, category_id):
         ).order_by("-id")
     )
 
-    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGES)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
     context = {
         "recipes": page_obj,
@@ -73,7 +73,7 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
-    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGES)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
 
     context = {
         'page_title': f'Search for "{search_term}" |',
