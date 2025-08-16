@@ -6,16 +6,19 @@ from utils.pagination import make_pagination
 from recipes.models import Recipe
 
 
+PER_PAGES = 9
+
+
 def home(request):
     recipes = Recipe.objects.filter(
         is_published=True
     ).order_by("-id")
 
-    page_obj, pagination_range = make_pagination(request, recipes, 9)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGES)
 
     context = {
         "recipes": page_obj,
-        'pages': pagination_range,
+        'pagination_range': pagination_range,
         }
 
     return render(request, "recipes/pages/home.html", context)
@@ -29,7 +32,7 @@ def category(request, category_id):
         ).order_by("-id")
     )
 
-    page_obj, pagination_range = make_pagination(request, recipes, 9)
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGES)
 
     context = {
         "recipes": page_obj,
@@ -69,7 +72,7 @@ def search(request):
         is_published=True
     ).order_by('-id')
 
-    page_obj, pagination_range = make_pagination(request, recipes, 9)    
+    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGES)
 
     context = {
         'page_title': f'Search for "{search_term}" |',
