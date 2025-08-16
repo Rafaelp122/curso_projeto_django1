@@ -4,9 +4,6 @@ from recipes.models import Category, Recipe, User
 
 
 class RecipeTestBase(TestCase):
-    def setUp(self) -> None:
-        return super().setUp()
-
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
 
@@ -16,7 +13,7 @@ class RecipeTestBase(TestCase):
         last_name='user',
         username='user',
         password='123456',
-        email='username@email.com'  
+        email='username@email.com'
     ):
         return User.objects.create_user(
             first_name=first_name,
