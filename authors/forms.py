@@ -13,3 +13,30 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]  # Aqui definimos os campos eu quero usar
+
+        labels = {
+            'username': 'Username',
+            'first_name': 'First name',
+            'last_name': 'Last name',
+            'email': 'E-mail',
+            'password': 'Password'
+        }
+
+        help_texts = {
+            'email': 'The e-mail must be valid.'
+        }
+        error_messages = {
+            'username': {
+                'required': 'This field must not be empty',
+            }
+        }
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'placeholder': 'Type you username here',
+                'class': 'input text-input',
+            }),
+            'password': forms.PasswordInput(attrs={
+                'placeholver': 'Type your password here.'
+            })
+        }
