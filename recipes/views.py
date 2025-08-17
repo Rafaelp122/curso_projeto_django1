@@ -1,13 +1,12 @@
 import os
 
+from django.contrib import messages
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
-from utils.pagination import make_pagination
-from django.contrib import messages
 
 from recipes.models import Recipe
-
+from utils.pagination import make_pagination
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
@@ -63,7 +62,6 @@ def recipe(request, id):
 
 def search(request):
     messages.success(request, 'Epa, você foi pesquisar algo que eu vi.')
-
 
     search_term = request.GET.get('q', '').strip()
 

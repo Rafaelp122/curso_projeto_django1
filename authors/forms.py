@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 
 def add_attr(field, attr_name, attr_new_val):
@@ -80,3 +81,19 @@ class RegisterForm(forms.ModelForm):
                 'placeholver': 'Type your password here.'
             })
         }
+
+    def clean_password(self):
+        # self.data: QueryDict com os dados brutos (strings) enviados pelo
+        # usuário (ex.: request.POST)
+        # self.cleaned_data: dict com valores validados e convertidos
+        # (disponível após is_valid())
+        data = self.cleaned_data.get('password')
+
+        if 'atenção' in data:
+            raise ValidationError(
+                'Não digite %(picoca)s no campo password',
+                code='invalid',
+                params={'pipoca': '"atenção"'}
+            )
+
+        return data
