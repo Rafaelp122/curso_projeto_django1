@@ -48,12 +48,14 @@ class RegisterForm(forms.ModelForm):
             'one lowercase letter and one number. '
             'The length should be at least 8 characters.'
         ),
-        validators=[strong_password]
+        validators=[strong_password],
+        label='Password'
     )
 
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(),
+        label='Password2'
     )
 
     # Classe que utilizamos pra enviar metadados do nosso formulario
@@ -67,14 +69,12 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]  # Aqui definimos os campos eu quero usar
-        # exclude = ['first_name']
 
         labels = {
             'username': 'Username',
             'first_name': 'First name',
             'last_name': 'Last name',
             'email': 'E-mail',
-            'password': 'Password'
         }
 
         help_texts = {
@@ -86,22 +86,6 @@ class RegisterForm(forms.ModelForm):
             }
         }
 
-    def clean_password(self):
-        # self.data: QueryDict com os dados brutos (strings) enviados pelo
-        # usuário (ex.: request.POST)
-        # self.cleaned_data: dict com valores validados e convertidos
-        # (disponível após is_valid())
-        data = self.cleaned_data.get('password')
-
-        if 'atenção' in data:
-            raise ValidationError(
-                'Não digite %(picoca)s no campo password',
-                code='invalid',
-                params={'pipoca': '"atenção"'}
-            )
-
-        return data
-
     def clean(self):
         cleaned_data = super().clean()
 
@@ -109,7 +93,13 @@ class RegisterForm(forms.ModelForm):
         password2 = cleaned_data.get("password2")
 
         if password != password2:
+            password_confirmation_error = ValidationError(
+                'Password and password2 must be equal',
+                code='invalid'
+            )
             raise ValidationError({
-                'password': 'Password and password2 must be equal',
-                'password2': 'Password and password2 must be equal',
+                'password': password_confirmation_error,
+                'password2': [
+                    password_confirmation_error,
+                ],
             })
