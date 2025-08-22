@@ -37,16 +37,30 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password'], 'Type your password here')
         add_placeholder(self.fields['password2'], 'Repeat your password')
 
+    username = forms.CharField(
+        label='Username',
+        help_text=(
+            'Username must have letters, numbers or one of those @.+-_. '
+            'The lenght should be between 4 and 150 characters.'
+        ),
+        error_messages={
+            'required': 'This field must not be empty',
+            'min_length': 'Username must have at least 4 characters',
+            'max_length': 'Username must have less than 150 characters'
+        },
+        min_length=4,
+        max_length=150,
+    )
     first_name = forms.CharField(
         error_messages={'required': 'Write your first name'},
-        label='First name'
+        label='First name',
     )
     last_name = forms.CharField(
         error_messages={'required': 'Write your last name'},
         label='Last name'
     )
     email = forms.EmailField(
-        error_messages={'required': 'The e-mail is required'},
+        error_messages={'required': 'E-mail is required'},
         label='E-mail',
         help_text='The e-mail must be valid',
     )
@@ -66,7 +80,7 @@ class RegisterForm(forms.ModelForm):
     password2 = forms.CharField(
         widget=forms.PasswordInput(),
         error_messages={
-            'required': 'Please, repeat your password'
+            'required': 'Please, repeat your password',
         },
         label='Password2'
     )
@@ -82,15 +96,6 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]  # Aqui definimos os campos eu quero usar
-
-        labels = {
-            'username': 'Username',
-        }
-        error_messages = {
-            'username': {
-                'required': 'This field must not be empty',
-            }
-        }
 
     def clean(self):
         cleaned_data = super().clean()
