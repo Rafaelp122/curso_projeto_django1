@@ -1,4 +1,5 @@
 from django.urls import resolve, reverse
+
 from recipes import views
 
 from .test_recipe_base import RecipeTestBase
@@ -10,7 +11,7 @@ class RecipeSearchViewTest(RecipeTestBase):
         self.assertIs(resolved.func, views.search)
 
     def test_recipe_search_loads_correct_template(self):
-        response = self.client.get(reverse('recipes:search')+ '?q=teste')
+        response = self.client.get(reverse('recipes:search') + '?q=teste')
         self.assertTemplateUsed(response, 'recipes/pages/search.html')
 
     def test_recipe_search_raises_404_if_no_search_term(self):
