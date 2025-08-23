@@ -66,5 +66,6 @@
     "django-html": "html",
     "javascript": "javascriptreact",
     "javascriptreact": "javascriptreact"
-  }
+  },
+  "liveServer.settings.port": 5501
 }
