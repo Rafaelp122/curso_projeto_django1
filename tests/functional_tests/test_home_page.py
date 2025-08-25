@@ -1,13 +1,12 @@
 import time
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import LiveServerTestCase
 from selenium.webdriver.common.by import By
 
 from utils.browser import make_chrome_browser
 
 
-class RecipeHomePageFunctionalTest(LiveServerTestCase):
+class RecipeHomePageFunctionalTest(StaticLiveServerTestCase):
     def sleep(self, seconds=5):
         time.sleep(seconds)
 
