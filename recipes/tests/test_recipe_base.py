@@ -3,7 +3,7 @@ from django.test import TestCase
 from recipes.models import Category, Recipe, User
 
 
-class RecipeTestBase(TestCase):
+class RecipeMixin:
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
 
@@ -15,7 +15,7 @@ class RecipeTestBase(TestCase):
         password='123456',
         email='username@email.com'
     ):
-        return User.objects.create_user(
+        return User.objects.create_user(  # type: ignore
             first_name=first_name,
             last_name=last_name,
             username=username,
@@ -45,7 +45,7 @@ class RecipeTestBase(TestCase):
             author_data = {}
 
         return Recipe.objects.create(
-            category=self.make_category(**category_data),
+            category=self.make_category(**category_data),  # type: ignore
             author=self.make_author(**author_data),
             title=title,
             description=description,
@@ -58,3 +58,8 @@ class RecipeTestBase(TestCase):
             preparation_steps_is_html=preparation_steps_is_html,
             is_published=is_published,
         )
+
+
+class RecipeTestBase(TestCase, RecipeMixin):
+    def setUp(self) -> None:
+        return super().setUp()
