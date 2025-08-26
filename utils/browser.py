@@ -20,6 +20,8 @@
 #     browser.get('http://www.udemy.com.br/')
 #     browser.quit()
 
+import os
+
 from selenium import webdriver
 
 
@@ -29,6 +31,9 @@ def make_chrome_browser(*options):
     if options is not None:
         for option in options:
             chrome_options.add_argument(option)
+
+    if os.environ.get('SELENIUM_HEADLESS') == '1':
+        chrome_options.add_argument(option)
 
     browser = webdriver.Chrome(options=chrome_options)
     return browser
