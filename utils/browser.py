@@ -33,7 +33,7 @@ def make_chrome_browser(*options):
             chrome_options.add_argument(option)
 
     if os.environ.get('SELENIUM_HEADLESS') == '1':
-        chrome_options.add_argument(option)
+        chrome_options.add_argument('--headless')
 
     browser = webdriver.Chrome(options=chrome_options)
     return browser

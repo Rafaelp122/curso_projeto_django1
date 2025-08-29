@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from .base import RecipeBaseFuncionalTest  # type: ignore
 
 
-@pytest.mark.functionaltest
+@pytest.mark.functional_test
 class RecipeHomePageFunctionalTest(RecipeBaseFuncionalTest):
     def test_recipe_home_page_without_recipes_not_found_message(self):
         self.browser.get(self.live_server_url)

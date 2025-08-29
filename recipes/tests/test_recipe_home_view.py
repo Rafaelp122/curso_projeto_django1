@@ -65,7 +65,7 @@ class RecipeHomeViewTest(RecipeTestBase):
             self.assertEqual(paginator.num_pages, 3)
             self.assertEqual(len(paginator.get_page(1)), 3)
             self.assertEqual(len(paginator.get_page(2)), 3)
-            self.assertEqual(len(paginator.get_page(3)), 3)
+            self.assertEqual(len(paginator.get_page(3)), 2)
 
     def test_invalid_page_query_uses_page_one(self):
         self.make_recipe_in_batch(qtd=8)
