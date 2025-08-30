@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from .base import AuthorsBaseTest
 
 
-@pytest.mark.funcional_test
+@pytest.mark.functional_test
 class AuthorsRegisterTest(AuthorsBaseTest):
     def fill_form_dummy_data(self, form):
 
