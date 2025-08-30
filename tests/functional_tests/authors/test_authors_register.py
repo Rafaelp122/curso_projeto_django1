@@ -1,16 +1,12 @@
+import pytest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from .base import AuthorsBaseTest
 
 
+@pytest.mark.funcional_test
 class AuthorsRegisterTest(AuthorsBaseTest):
-    def get_by_placeholder(self, web_element, placeholder):
-        return web_element.find_element(
-            By.XPATH,
-            f'//input[@placeholder="{placeholder}"]'
-        )
-
     def fill_form_dummy_data(self, form):
 
         fields = form.find_elements(By.TAG_NAME, 'input')
@@ -82,7 +78,9 @@ class AuthorsRegisterTest(AuthorsBaseTest):
 
     def test_passwords_do_not_match(self):
         def callback(form):
-            password1 = self.get_by_placeholder(form, 'Type your password here')
+            password1 = self.get_by_placeholder(
+                form, 'Type your password here'
+            )
             password2 = self.get_by_placeholder(form, 'Repeat your password')
             password1.send_keys('P@ssw0rd')
             password2.send_keys('P@ssw0rd_Different')
