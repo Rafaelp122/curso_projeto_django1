@@ -119,7 +119,7 @@ def dashboard_recipe_edit(request, id):
 
     return render(
         request,
-        'authors/pages/dashboard.html',
+        'authors/pages/dashboard_recipe.html',
         context={
             'form': form
         }
