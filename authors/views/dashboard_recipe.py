@@ -56,7 +56,7 @@ class DashboardRecipe(View):
         return self.render_recipe(form)
 
     def post(self, request, id=None):
-        recipe = self.get_recipe
+        recipe = self.get_recipe(id)
 
         form = AuthorRecipeForm(
             data=request.POST or None,
@@ -84,3 +84,11 @@ class DashboardRecipe(View):
             )
 
         return self.render_recipe(form)
+
+
+class DashboardRecipeDelete(DashboardRecipe):
+    def post(self, *args, **kwargs):
+        recipe = self.get_recipe(self.request.POST.get('id'))
+        recipe.delete()
+        messages.success(self.request, 'Deleted sucessfully.')
+        return redirect(reverse("authors:dashboard"))
