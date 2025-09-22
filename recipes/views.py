@@ -1,8 +1,6 @@
 import os
 
-from django.contrib import messages
 from django.db.models import Q
-from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 
@@ -33,9 +31,10 @@ class RecipeListViewBase(ListView):
             ctx.get('recipes'),
             PER_PAGE
         )
-        ctx.update(
-            {'recipes': page_obj, 'pagination_range': pagination_range}
-        )
+        ctx.update({
+            'recipes': page_obj,
+            'pagination_range': pagination_range,
+        })
         return ctx
 
 
@@ -80,30 +79,30 @@ def recipe(request, id):
     return render(request, "recipes/pages/recipe-view.html", context)
 
 
-def search(request):
-    messages.success(request, 'Epa, você foi pesquisar algo que eu vi.')
+class RecipeListViewSearch(RecipeListViewBase):
+    template_name = 'recipes/pages/search.html'
 
-    search_term = request.GET.get('q', '').strip()
+    def get_queryset(self, *args, **kwargs):
+        search_term = self.request.GET.get('q', '').strip()
+        qs = super().get_queryset(*args, **kwargs)
 
-    if not search_term:
-        raise Http404()
+        filtered_qs = qs.filter(
+            Q(
+                Q(title__icontains=search_term) |
+                Q(description__icontains=search_term)
+            ),
+        )
+        return filtered_qs
 
-    recipes = Recipe.objects.filter(
-        Q(
-            Q(title__icontains=search_term) |
-            Q(description__icontains=search_term)
-        ),
-        is_published=True
-    ).order_by('-id')
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
 
-    page_obj, pagination_range = make_pagination(request, recipes, PER_PAGE)
+        search_term = self.request.GET.get('q', '').strip()
 
-    context = {
-        'page_title': f'Search for "{search_term}" |',
-        'search_term': search_term,
-        'recipes': page_obj,
-        'pagination_range': pagination_range,
-        'additional_url_query': f'&={search_term}',
-    }
+        ctx.update({
+            'page_title': f'Search for "{search_term}" |',
+            'search_term': search_term,
+            'additional_url_query': f'&={search_term}',
+        })
 
-    return render(request, 'recipes/pages/search.html', context)
+        return ctx
