@@ -3,7 +3,7 @@ import os
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
-
+from django.http import Http404
 from recipes.models import Recipe
 from utils.pagination import make_pagination
 
@@ -22,6 +22,10 @@ class RecipeListViewBase(ListView):
         filtered_qs = qs.filter(
             is_published=True,
         )
+
+        if not qs:
+            raise Http404()
+
         return filtered_qs
 
     def get_context_data(self, *args, **kwargs):
@@ -84,6 +88,10 @@ class RecipeListViewSearch(RecipeListViewBase):
 
     def get_queryset(self, *args, **kwargs):
         search_term = self.request.GET.get('q', '').strip()
+
+        if not search_term:
+            raise Http404()
+
         qs = super().get_queryset(*args, **kwargs)
 
         filtered_qs = qs.filter(
