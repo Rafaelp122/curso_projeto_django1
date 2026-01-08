@@ -1,4 +1,4 @@
-## curso_projeto_django1
+## learning-django
 
 Projeto desenvolvido como exercício prático durante o curso **[Curso de Django Web Framework e Django Rest Framework (DRF)]([https://www.udemy.com/link-do-curso/](https://www.udemy.com/course/curso-de-django-web-framework-com-python-html-e-css/))** ministrado pelo instrutor **Luiz Otávio Miranda** na Udemy.
 
