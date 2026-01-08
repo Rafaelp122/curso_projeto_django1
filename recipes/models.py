@@ -1,3 +1,6 @@
+import string
+from random import SystemRandom
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import F, Value
@@ -15,6 +18,25 @@ class Category(models.Model):
         return str(self.name)
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            rand_letters = ''.join(
+                SystemRandom().choices(
+                    string.ascii_letters + string.digits,
+                    k=5,
+                )
+            )
+            self.slug = slugify(f'{self.name}-{rand_letters}')
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
 class RecipeManager(models.Manager):
     def get_published(self):
         return self.filter(
@@ -25,7 +47,7 @@ class RecipeManager(models.Manager):
                 F('author__last_name'), Value(' ('),
                 F('author__username'), Value(')'),
             )
-        ).order_by('-id')
+        ).order_by('-id').select_related('category', 'author').prefetch_related('tags')
 
 
 class Recipe(models.Model):
@@ -53,6 +75,7 @@ class Recipe(models.Model):
         default=None,
     )
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(Tag, blank=True, default='')
 
     def __str__(self) -> str:
         return str(self.title)
