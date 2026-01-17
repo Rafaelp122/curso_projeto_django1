@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from tag.models import Tag
 
 from authors.validators import AuthorRecipeValidator
 
-from .models import Recipe
+from .models import Recipe, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -50,6 +49,12 @@ class RecipeSerializer(serializers.ModelSerializer):
         return f'{recipe.preparation_time} {recipe.preparation_time_unit}'
 
     def validate(self, attrs):
+        if self.instance is not None and attrs.get('servings') is None:
+            attrs['servings'] = self.instance.servings
+
+        if self.instance is not None and attrs.get('preparation_time') is None:
+            attrs['servings'] = self.instance.preparation_time
+
         super_validate = super().validate(attrs)
         AuthorRecipeValidator(
             data=attrs,

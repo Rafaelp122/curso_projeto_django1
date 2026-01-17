@@ -19,12 +19,12 @@ urlpatterns = [
     path('recipes/<int:pk>/', views.RecipeDetail.as_view(), name="recipe"),
     path(
         'recipes/api/v2/',
-        views.recipe_api_list,
+        views.RecipeAPIv2List.as_view(),
         name='recipe_api_v2',
     ),
     path(
         'recipes/api/v2/<int:pk>/',
-        views.recipe_api_detail,
+        views.RecipeAPIv2Detail.as_view(),
         name='recipe_api_v2_detail',
     ),
     path(
